@@ -1,0 +1,22 @@
+<%= form_tag("/", method: "post") do %>
+  <%= label_tag(:first_name, "First Name:") %>
+  <%= text_field_tag(:first_name) %>
+  <br/>
+  <br/>
+  <%= label_tag(:last_name, "Last Name:") %>
+  <%= text_field_tag(:last_name) %>
+  <br/>
+  <br/>
+  <%= label_tag(:birth_date, "Birth Date:") %>
+  <%= select_date Date.today, prefix: :birth_date %>
+  <br/>
+  <br/>
+  <%= label_tag(:user_vote, "Accept:") %>
+  <%= check_box_tag 'accept', prefix: :user_vote %>
+  <br/>
+  <br/>
+  <%= label(:accept, "If you agree tick the checkbox if not leave it blank") %>
+  <br/>
+  <br/>
+  <%= submit_tag("Vote") %>
+<% end %>
