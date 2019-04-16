@@ -18,7 +18,7 @@ class VoteManager
   	 first_name: params[:first_name],
   	 last_name: params[:last_name],
   	 birth_date: params[:birth_date],
-  	 vote: params[:accept].present? ? true : false
+  	 vote: params[:vote]
   	}
   	@record = @record.to_json
   end
