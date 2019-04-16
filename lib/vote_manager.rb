@@ -17,7 +17,7 @@ class VoteManager
   end
 
   def validate_name
-    if !@params[:first_name].blank?
+    if @params[:first_name].blank?
       errors.add(:first_name, "can't be blank")
       raise ActiveModel::ValidationError.new(self)
     end
