@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     rescue ActiveModel::ValidationError => e
       flash[:error] = e.message
     end
-  	redirect_back fallback_location: { action: index }
+  	redirect_to action: "index"
   end
 
   private
