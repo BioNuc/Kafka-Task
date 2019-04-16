@@ -7,8 +7,12 @@
   <%= text_field_tag(:last_name) %>
   <br/>
   <br/>
-  <%= label_tag(:birth_date, "Birth Date:") %>
-  <%= select_date Date.today, prefix: :birth_date %>
+  <%= label(:birth_date, "Birth Date:") %>
+  <input 
+    type="date" 
+    name="birth_date" 
+    value="<%=Date.today.strftime("%Y-%m-%d")%>"
+    max="<%=Date.today.strftime("%Y-%m-%d")%>">
   <br/>
   <br/>
   <%= label_tag(:user_vote, "Accept:") %>
