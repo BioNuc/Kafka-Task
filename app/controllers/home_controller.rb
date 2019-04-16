@@ -1,12 +1,14 @@
 class HomeController < ApplicationController
   layout "application"
-  def index
-  	
-  end
+  def index ; end
 
   def create
-  	vote_manager.publish vote_params
-  	flash[:success] = "Your response has been recorded."
+  	begin
+      vote_manager.publish! vote_params
+  	  flash[:success] = "Your response has been recorded."
+    rescue ActiveModel::ValidationError => e
+      flash[:error] = e.message
+    end
   	redirect_back fallback_location: { action: index }
   end
 
