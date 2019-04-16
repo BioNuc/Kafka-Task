@@ -3,24 +3,15 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+- Install Ruby version stated in Gemfile (ruby 2.6.2)
 
-* Ruby version
+- Install Bundler version stated in Gemfile.lock (2.0.1)
 
-* System dependencies
+- Install Kafka (you can use this tutorial as a guide https://tecadmin.net/install-apache-kafka-ubuntu/)
 
-* Configuration
+- To start Kafka go inside Kafka Binary and in terminal
+ ./bin/zookeeper-server-start.sh config/zookeeper.properties
+ ./bin/kafka-server-start.sh config/server.properties
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# Kafka-Task
-A private repository for Rails/Kafka task of Usytech
+- To start Rails application go to application folder and in terminal
+  bundle exec rails server
