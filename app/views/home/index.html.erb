@@ -1,13 +1,13 @@
 <%= form_tag("/", method: "post") do %>
   <%= label_tag(:first_name, "First Name:") %>
-  <%= text_field_tag(:first_name) %>
+  <%= text_field_tag(:first_name, nil, required: "required") %>
   <br/>
   <br/>
   <%= label_tag(:last_name, "Last Name:") %>
-  <%= text_field_tag(:last_name) %>
+  <%= text_field_tag(:last_name, nil, required: "required") %>
   <br/>
   <br/>
-  <%= label(:birth_date, "Birth Date:") %>
+  <%= label_tag(:birth_Date, "Birth Date:") %>
   <input 
     type="date" 
     name="birth_date" 
@@ -15,12 +15,35 @@
     max="<%=Date.today.strftime("%Y-%m-%d")%>">
   <br/>
   <br/>
-  <%= label_tag(:user_vote, "Accept:") %>
-  <%= check_box_tag 'accept', prefix: :user_vote %>
+  <div id="voteOptions">
+    <%= label(:user_vote, "Vote:") %> &nbsp; &nbsp;
+    <%= label_tag(:user_vote_yes, "Yes") %>
+    <%= check_box_tag 'vote_yes', value= "1", checked= false , 
+    { onClick: "toggle_vote_checkboxes('yes')" } %> &nbsp; &nbsp;
+    <%= label_tag(:user_vote_no, "No") %>
+    <%= check_box_tag 'vote_no', value= "1", checked= false, 
+    { onClick: "toggle_vote_checkboxes('no')" }  %>
+  </div>
   <br/>
   <br/>
-  <%= label(:accept, "If you agree tick the checkbox if not leave it blank") %>
-  <br/>
-  <br/>
-  <%= submit_tag("Vote") %>
+  <input 
+    type="submit"
+    name="commit" 
+    value="Vote" 
+    onclick="return validate_form_input();"
+    data-disable-with="Vote" />
 <% end %>
+<script>
+  function validate_form_input() {
+    var checkedboxes = $('#voteOptions :checkbox:checked').length;
+    if (checkedboxes == 0) { 
+      alert('You must choose either Yes or No for your vote');
+      return false;
+    }
+    return true;
+  }
+  function toggle_vote_checkboxes(checkbox) {
+    var checkbox_id = (checkbox == 'yes') ? 'vote_no' : 'vote_yes';
+    $(`#${checkbox_id}`).prop('checked', false);
+  }
+</script>
