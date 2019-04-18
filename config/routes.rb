@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  get '/', to: 'home#index'
-  post '/', to: 'home#create'
+  root to: 'home#index'
+  resources :votes, only: :create 
 end
