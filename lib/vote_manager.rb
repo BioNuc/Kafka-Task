@@ -20,14 +20,14 @@ class VoteManager
   validates :vote, inclusion: { in: [true, false] }
 
   def publish!
-	  self.validate!
+    self.validate!
     publish_vote
   end
 
   private
 
   def publish_vote
-  	WaterDrop::SyncProducer.call(json_record, topic: 'vote')
+    WaterDrop::SyncProducer.call(json_record, topic: 'vote')
   end
 
   def json_record
