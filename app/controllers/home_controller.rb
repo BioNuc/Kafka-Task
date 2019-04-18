@@ -3,13 +3,13 @@ class HomeController < ApplicationController
   def index ; end
 
   def create
-  	begin
-      vote_manager.publish! vote_params
+    begin
+      vote_manager.publish!
   	  flash[:success] = "Your response has been recorded."
-    rescue ActiveModel::ValidationError => e
-      flash[:error] = e.message
+    rescue ActiveModel::ValidationError
+      @error = "Something went wrong with the input!"
     end
-  	redirect_to action: "index"
+  	render :index
   end
 
   private
@@ -23,6 +23,6 @@ class HomeController < ApplicationController
   
   def vote_manager
   	require_dependency 'vote_manager'
-  	VoteManager.new
+  	VoteManager.new(vote_params)
   end
 end
