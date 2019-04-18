@@ -1,0 +1,40 @@
+<%
+  current_date = Date.today.strftime("%Y-%m-%d")
+%>
+
+<%= form_tag(votes_path, method: "post") do %>
+  <%= label_tag(:first_name, "First Name:") %>
+  <%= text_field_tag(:first_name, nil, required: "required") %>
+  
+  <br/>
+  <br/>
+  <%= label_tag(:last_name, "Last Name:") %>
+  <%= text_field_tag(:last_name, nil, required: "required") %>
+  
+  <br/>
+  <br/>
+  <%= label_tag(:birth_Date, "Birth Date:") %>
+  <input type="date" name="birth_date" value="<%= current_date %>" max="<%= current_date %>">
+  
+  <br/>
+  <br/>
+  <div id="voteOptions">
+    <%= label(:user_vote, "Vote:") %> &nbsp; &nbsp;
+    <%= label_tag(:user_vote_yes, "Yes") %>
+    <%= check_box_tag 'vote', value= "1", checked= false, {class: 'js-yesCheckbox'} %> &nbsp; &nbsp;
+    <%= label_tag(:user_vote_no, "No") %>
+    <%= check_box_tag 'vote', value= "0", checked= false, {class: 'js-noCheckbox'} %>
+  </div>
+  
+  <br/>
+  <div style="color:red;"><%= @error %></div>
+  
+  <br/>
+  <input type="submit" class="js-submitTrigger" />
+<% end %>
+
+<script type="text/javascript">
+  window.onDomLoadFN = function(){
+    KafkaTask.Homepage.init();
+  };
+</script>
