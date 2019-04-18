@@ -1,15 +1,23 @@
 class VoteManager
   include ActiveModel::Validations
   
-  attr_accessor :first_name, :last_name, :birth_date, :vote
-  
-  validates :first_name, :last_name, presence: true
-  validates :vote, inclusion: { in: [true, false] }
-  validate  :birth_date_validation
+  attr_reader :first_name, :last_name, :birth_date, :vote
 
   def initialize(params)
-    prepare params
+    @first_name = params[:first_name]
+    @last_name = params[:last_name]
+    
+    begin
+      @birth_date = Date.parse(params[:birth_date])
+    rescue
+      @birth_date = nil
+    end
+    
+    @vote = (params[:vote] == "1" ? true : false)
   end
+
+  validates :first_name, :last_name, :birth_date, presence: true
+  validates :vote, inclusion: { in: [true, false] }
 
   def publish!
 	  self.validate!
@@ -17,13 +25,6 @@ class VoteManager
   end
 
   private
-
-  def prepare(params)
-  	@first_name = params[:first_name]
-    @last_name = params[:last_name]
-    @birth_date = params[:birth_date]
-    @vote = params[:vote]
-  end
 
   def publish_vote
   	WaterDrop::SyncProducer.call(json_record, topic: 'vote')
@@ -36,18 +37,5 @@ class VoteManager
       birth_date: @birth_date,
       vote: @vote
     }.to_json
-  end
-
-  def birth_date_validation     
-    errors.add(:birth_date, "is not valid") unless valid_birth_date?
-  end
-
-  def valid_birth_date?
-    begin
-      Date.parse(birth_date)
-      true
-    rescue ArgumentError
-      false
-    end
   end
 end
